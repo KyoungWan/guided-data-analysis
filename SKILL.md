@@ -1,6 +1,6 @@
 ---
 name: guided-data-analysis
-description: Lead multi-source data problem solving by first confirming the task's purpose, reason, audience, deadline, and report format through the designated contact, then data quality checks, validated joins, hypothesis testing, and reporting while pausing at stage boundaries to align the user's understanding. Use for scattered-data analysis tasks or tests where the model should find leads autonomously and prepare questions for the user to relay to a designated contact through ask, and incorporate the returned answers. Not for a single calculation or report-only editing.
+description: Lead multi-source data problem solving by first confirming the task's purpose, reason, audience, deadline, and report format through the designated contact, then data quality checks, validated joins, hypothesis testing, and reporting while pausing at stage boundaries to align the user's understanding. Use for scattered-data analysis tasks or tests where the model should find leads autonomously and prepare questions for the user to relay to a designated contact through ask, and incorporate the returned answers. Also use when the user requests a post-solution quiz grounded in the completed analysis to assess their understanding and critical evaluation of AI decisions. Not for a single calculation or report-only editing.
 ---
 
 # 함께 이해하는 데이터 분석
@@ -199,7 +199,41 @@ description: Lead multi-source data problem solving by first confirming the task
 
 `DECISIONS.md`에는 중요한 판단, 근거 위치나 담당자 답변, 선택하지 않은 주요 대안의 이유, 미확인 사항을 짧게 누적한다. 재개 시 현재 단계와 다음 작업을 찾을 수 있게 한다. 영향이 큰 처리에는 처리 전후 수치와 결론 영향도 남긴다. 요구사항은 답변 출처와 결과물 반영 위치를 연결한다. 실제로 검토한 대안만 기록하고, 사용자의 판단이나 AI 제안 거절 사례를 꾸며내지 않는다.
 
-최종 설명에서는 사용자가 분석 기간, 주요 제외·보정, 방법 선택, 가장 불확실한 결론을 자신의 말로 설명할 수 있도록 도와준다. 필요하면 한 가지 판단의 대안과 결과 차이를 함께 확인한다. 모든 체크리스트를 암기시키거나 이해 확인을 형식적인 시험으로 만들지 않는다.
+최종 설명에서는 사용자가 분석 기간, 주요 제외·보정, 방법 선택, 가장 불확실한 결론을 자신의 말로 설명할 수 있도록 도와준다. 필요하면 한 가지 판단의 대안과 결과 차이를 함께 확인한다. 모든 체크리스트를 암기시키거나 이해 확인을 형식적인 시험으로 만들지 않는다. 풀이 후 사용자가 퀴즈를 요청하면 아래 절차로 이해와 판단 근거를 점검한다.
+
+## 5. 요청 시: 풀이 과정과 판단을 설명하는 퀴즈
+
+문제를 푼 뒤 사용자가 “이 문제를 기반으로 나에게 문제풀이과정을 설명하는 퀴즈를 내줘”처럼 요청하면 시작한다. 자동으로 퀴즈를 강요하지 않는다. 이 모드에서는 착수 메타정보를 다시 묻지 않고 완료된 분석을 이어받는다.
+
+### 근거 준비
+
+현재 세션의 대화와 실제 작업 기록(`note.md` 또는 기존 메모 경로, `DECISIONS.md`, 담당자 답변, 분석 코드, 결과표·최종 보고서)을 확인한다. 퀴즈 때문에 별도 단수·복수 기록을 만들지 않는다. 접근할 수 없는 이전 대화나 파일을 읽었다고 주장하지 않는다. 기록이 부족하면 확인 가능한 범위에서 출제하고, 핵심 근거가 없으면 해당 자료의 위치나 내용을 요청한다.
+
+중요한 결정마다 선택, 당시 근거, 검토한 대안, 검증 결과, 남은 불확실성을 파악한다. 실제로 하지 않은 판단·검증·사용자의 동의를 꾸며내지 않는다. AI가 이전에 내린 결론도 정답으로 고정하지 않고 원본·코드·수치와 대조한다.
+
+### 퀴즈 전 안내 (시작할 때 한 번)
+
+아래 취지를 자연스럽게 전달한 뒤 첫 질문을 낸다. 아직 답하지 않은 문제의 정답은 안내에 포함하지 않는다.
+
+> 이번 퀴즈는 풀이를 외웠는지보다, 근거를 바탕으로 판단을 설명하고 점검할 수 있는지 살펴보는 시간입니다. 자료를 다시 열어 확인해도 좋습니다.
+>
+> - **구체적인 근거로 설명해 주세요.** 실제 파일명, 관련 함수나 처리 구간, 관측값과 계산 결과를 짚어 주세요. 함수가 없는 작업이라면 표·행·컬럼을 근거로 삼으면 됩니다.
+> - **틀린 부분과 아쉬운 판단도 솔직하게 돌아봐 주세요.** 무엇을 잘못 이해했는지, 어떤 확인이 부족했는지, 지금이라면 어떻게 보완할지 말해 주세요. 모르는 것은 모른다고 해도 괜찮습니다.
+> - **AI의 설명도 직접 검증해 주세요.** 결론을 뒷받침하는 근거뿐 아니라 반례와 한계를 찾고, 어떤 증거가 나오면 판단을 바꿀지도 설명해 주세요.
+> - **최종 제출물은 필요한 파일만 남겨 정리해 주세요.** 제출 요건을 확인하고, 불필요한 임시 파일과 내부 판단 기록인 `DECISIONS.md`는 제출본에서 제거해 주세요. 복습과 재현에 필요한 작업 원본은 별도로 보관합니다.
+
+이 안내는 파일 삭제 실행 요청으로 간주하지 않는다. 실제 제출본을 정리할 때는 제출 요건을 우선하며, 필수 코드·근거·재현 파일을 불필요한 파일로 취급하지 않는다. 작업 기록은 보존하고 제출용 복사본에서 불필요한 파일과 `DECISIONS.md`를 제거한다. 제출 요건에 판단 기록이 포함되면 그 요건을 따른다.
+
+### 출제와 피드백
+
+- 기본은 짧은 서술형 질문을 한 번에 하나씩 내고 답을 기다린다. 문제 수나 일괄 출제 방식은 사용자가 지정하면 따른다. 정답·해설은 해당 답변 뒤에 공개한다.
+- 실제 문제의 목적과 데이터 흐름, 핵심 계산의 분모·단위·대상, 정제·병합·방법 선택의 이유와 대안, 검증과 한계를 골고루 다룬다. 일반 통계 상식이나 숫자 암기보다 이 과제의 풀이를 자신의 말로 재구성하게 한다.
+- **AI 판단을 비판적으로 검토하는 질문을 반드시 포함한다.** 실제 AI 제안 하나를 골라 수용할 근거와 반대 근거, 성립 조건, 기각하거나 수정할 증거, 직접 확인할 방법을 묻는다. “AI가 그렇게 말해서” 또는 결론을 그대로 반복하는 답만으로 충분히 이해했다고 평가하지 않는다.
+- 예: “우리가 이 제외 기준을 적용한 이유를 실제 파일과 처리 전후 수치로 설명해 주세요. 이 기준이 결론을 왜곡할 가능성은 무엇이고, 어떤 비교로 확인할 수 있을까요?” 실제 적용한 기준에만 맞춰 출제한다. 가정 변경 문제는 가상 상황임을 명시하고 실제 결과처럼 다루지 않는다.
+- 답변은 근거의 정확성, 판단 이유와 대안의 이해, 독립적인 검증 방법, 불확실성 인식을 기준으로 피드백한다. AI와 의견이 같다는 이유로 정답 처리하거나, 다르다는 이유로 오답 처리하지 않는다. 근거 있는 반론과 오류 수정은 인정한다.
+- 추상적인 답에는 빠진 파일·값·비교 기준을 짚어 후속 질문을 한다. 틀리면 정확히 어느 부분이 왜 틀렸는지 근거와 함께 설명하고 짧게 다시 설명할 기회를 준다. 모른다는 고백 자체를 이해의 증거로 채점하지 않는다.
+- 검토 중 기존 AI 풀이의 오류가 드러나면 솔직히 인정하고 수정한다. 사용자 답을 기존 결론에 억지로 맞추지 않는다. 추가 계산이 필요하면 검증 전까지 판정을 보류한다.
+- 마무리에는 답변에서 확인된 강점, 다시 볼 판단과 근거 위치, 보완할 검증을 짧게 정리한다. 몇 문항의 답변만으로 문제 전체를 완전히 이해했다고 단정하지 않는다.
 
 ## 행동 예시
 
